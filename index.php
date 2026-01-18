@@ -1,5 +1,9 @@
+<!-- fopenは、ファイルをオープンする関数です -->
+<!-- file_get_contentsは、ファイルの内容を文字列として取得する関数です -->
+<!-- rは、読み込みモード -->
+<?php $fp=fopen("info.txt", "r"); ?>
 <!doctype html>
-<html lang="en">
+<html lang="ja">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -13,7 +17,29 @@
   <body>
     <?php include('navbar.php'); ?>
     <div style="padding: 30px 40px;">
-    <h1>サークルサイト</h1>
+    <h1>お知らせ</h1>
+    <?php
+    // ファイルが正常にオープンできたか確認
+    // fopenが失敗した場合、falseを返す
+      if($fp) {
+        // fgetsは、ファイルから1行読み込む関数です
+        $title = fgets($fp);
+        // ファイルから読み込んだ内容を表示
+        // <p><a href="info.php">'.$title.'</a></p>は何をしているかというと、
+        // $titleの内容をリンクテキストとして表示し、そのリンク先をinfo.phpに設定しています。
+        if($title) {
+          echo '<p><a href="info.php">'.$title.'</a></p>';
+        } else {
+          // ファイルが空の場合の処理
+          echo '<p>現在、お知らせはありません。</p>';
+        }
+          // ファイルを閉じる
+          fclose($fp);
+      } else {
+        // ファイルが開けなかった場合
+        echo '<p>お知らせの読み込みに失敗しました。</p>';
+      }
+    ?>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
